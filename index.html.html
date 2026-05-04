@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<title>Clock & Alarm</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#0d0d0f;color:#e8e6e0;min-height:100vh;overflow-x:hidden}
+.app{max-width:420px;margin:0 auto;padding:0 0 80px}
+.tabs{display:flex;border-bottom:0.5px solid #2a2a2e;position:sticky;top:0;background:#0d0d0f;z-index:10}
+.tab{flex:1;padding:14px;text-align:center;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#666;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s}
+.tab.active{color:#e8c87a;border-bottom-color:#e8c87a}
+.clock-section{padding:32px 24px 24px;text-align:center}
+.clock-face{position:relative;width:220px;height:220px;margin:0 auto 28px}
+.clock-svg{width:100%;height:100%}
+.digital-time{font-family:'Bebas Neue',cursive;font-size:64px;letter-spacing:0.04em;color:#e8e6e0;line-height:1}
+.digital-ampm{font-size:20px;color:#e8c87a;font-family:'Bebas Neue',cursive;margin-left:6px}
+.date-str{font-size:13px;color:#666;margin-top:8px;letter-spacing:0.06em}
+.stopwatch-section{padding:0 24px 24px;text-align:center}
+.sw-display{font-family:'Bebas Neue',cursive;font-size:56px;color:#e8e6e0;letter-spacing:0.02em;margin:20px 0}
+.sw-ms{font-size:32px;color:#888}
+.sw-btns{display:flex;gap:12px;justify-content:center;margin-bottom:16px}
+.sw-btn{padding:12px 28px;border-radius:40px;border:0.5px solid #3a3a3e;background:transparent;color:#e8e6e0;font-size:14px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.sw-btn:hover{background:#1e1e22}
+.sw-btn.primary{background:#e8c87a;color:#0d0d0f;border-color:#e8c87a;font-weight:500}
+.sw-btn.primary:hover{background:#f0d48a}
+.laps-list{max-height:160px;overflow-y:auto;border-top:0.5px solid #2a2a2e}
+.lap-item{display:flex;justify-content:space-between;padding:9px 4px;border-bottom:0.5px solid #1e1e22;font-size:13px;color:#aaa}
+.lap-item span:first-child{color:#666}
+.alarm-section{padding:20px 24px}
+.add-alarm-card{background:#17171b;border:0.5px solid #2a2a2e;border-radius:16px;padding:20px;margin-bottom:20px}
+.add-alarm-card h3{font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#666;margin-bottom:16px}
+.time-inputs{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.time-input{background:#0d0d0f;border:0.5px solid #3a3a3e;border-radius:10px;padding:12px 14px;color:#e8e6e0;font-size:28px;font-family:'Bebas Neue',cursive;width:72px;text-align:center;outline:none}
+.time-input:focus{border-color:#e8c87a}
+.time-sep{font-family:'Bebas Neue',cursive;font-size:28px;color:#444}
+.ampm-sel{background:#0d0d0f;border:0.5px solid #3a3a3e;border-radius:10px;padding:12px 10px;color:#e8e6e0;font-size:14px;outline:none;cursor:pointer}
+.alarm-label-input{width:100%;background:#0d0d0f;border:0.5px solid #2a2a2e;border-radius:10px;padding:10px 14px;color:#e8e6e0;font-size:13px;margin-bottom:14px;outline:none;font-family:'DM Sans',sans-serif}
+.alarm-label-input:focus{border-color:#e8c87a}
+.days-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.day-pill{width:36px;height:36px;border-radius:50%;border:0.5px solid #3a3a3e;background:transparent;color:#888;font-size:11px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.day-pill.on{background:#e8c87a;border-color:#e8c87a;color:#0d0d0f;font-weight:500}
+.add-btn{width:100%;padding:13px;background:#e8c87a;border:none;border-radius:12px;color:#0d0d0f;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.add-btn:hover{background:#f0d48a}
+.alarms-list{display:flex;flex-direction:column;gap:10px}
+.alarm-card{background:#17171b;border:0.5px solid #2a2a2e;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;transition:all 0.2s}
+.alarm-card.off{opacity:0.5}
+.alarm-time-big{font-family:'Bebas Neue',cursive;font-size:36px;color:#e8e6e0;line-height:1}
+.alarm-time-big .am{font-size:16px;color:#e8c87a;margin-left:4px}
+.alarm-meta{flex:1}
+.alarm-name{font-size:13px;color:#aaa;margin-bottom:4px}
+.alarm-days-display{font-size:11px;color:#555;letter-spacing:0.04em}
+.toggle{width:44px;height:24px;background:#2a2a2e;border-radius:12px;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0;border:none}
+.toggle::after{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#666;border-radius:50%;transition:all 0.2s}
+.toggle.on{background:#e8c87a}
+.toggle.on::after{left:23px;background:#0d0d0f}
+.del-btn{background:transparent;border:none;color:#444;cursor:pointer;font-size:16px;padding:4px}
+.del-btn:hover{color:#e85050}
+.no-alarms{text-align:center;color:#555;font-size:13px;padding:32px 0}
+.ringing-overlay{position:fixed;inset:0;background:rgba(13,13,15,0.96);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100}
+.ring-time{font-family:'Bebas Neue',cursive;font-size:80px;color:#e8c87a}
+.ring-label{font-size:16px;color:#aaa;margin-bottom:40px}
+.ring-dismiss{padding:16px 48px;background:#e8c87a;border:none;border-radius:40px;color:#0d0d0f;font-size:16px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+.ring-pulse{width:120px;height:120px;border-radius:50%;border:2px solid #e8c87a;margin-bottom:24px;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:0.6}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('clock')">Clock</div>
+    <div class="tab" onclick="showTab('stopwatch')">Stopwatch</div>
+    <div class="tab" onclick="showTab('alarm')">Alarm</div>
+  </div>
+
+  <div id="tab-clock">
+    <div class="clock-section">
+      <div class="clock-face">
+        <svg class="clock-svg" viewBox="0 0 220 220" id="analogClock">
+          <circle cx="110" cy="110" r="108" fill="none" stroke="#2a2a2e" stroke-width="1"/>
+          <circle cx="110" cy="110" r="95" fill="#17171b"/>
+          <g id="ticks"></g>
+          <line id="hrHand" x1="110" y1="110" x2="110" y2="48" stroke="#e8e6e0" stroke-width="4" stroke-linecap="round"/>
+          <line id="minHand" x1="110" y1="110" x2="110" y2="28" stroke="#e8e6e0" stroke-width="2.5" stroke-linecap="round"/>
+          <line id="secHand" x1="110" y1="110" x2="110" y2="22" stroke="#e8c87a" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="110" cy="110" r="4" fill="#e8c87a"/>
+        </svg>
+      </div>
+      <div>
+        <span class="digital-time" id="digitalTime">00:00</span><span class="digital-ampm" id="ampmLabel">AM</span>
+      </div>
+      <div class="date-str" id="dateStr"></div>
+    </div>
+  </div>
+
+  <div id="tab-stopwatch" style="display:none">
+    <div class="stopwatch-section">
+      <div class="sw-display" id="swDisplay">00:00<span class="sw-ms">.00</span></div>
+      <div class="sw-btns">
+        <button class="sw-btn" id="swLapBtn" onclick="swLap()" disabled>Lap</button>
+        <button class="sw-btn primary" id="swStartBtn" onclick="swToggle()">Start</button>
+        <button class="sw-btn" id="swResetBtn" onclick="swReset()">Reset</button>
+      </div>
+      <div class="laps-list" id="lapsList"></div>
+    </div>
+  </div>
+
+  <div id="tab-alarm" style="display:none">
+    <div class="alarm-section">
+      <div class="add-alarm-card">
+        <h3>New alarm</h3>
+        <div class="time-inputs">
+          <input class="time-input" id="aHour" type="number" min="1" max="12" value="07" maxlength="2"/>
+          <span class="time-sep">:</span>
+          <input class="time-input" id="aMin" type="number" min="0" max="59" value="00" maxlength="2"/>
+          <select class="ampm-sel" id="aAmpm"><option>AM</option><option>PM</option></select>
+        </div>
+        <input class="alarm-label-input" id="aLabel" placeholder="Label (optional)" type="text"/>
+        <div class="days-row" id="daysRow"></div>
+        <button class="add-btn" onclick="addAlarm()">Add Alarm</button>
+      </div>
+      <div class="alarms-list" id="alarmsList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="ringing-overlay" id="ringingOverlay" style="display:none">
+  <div class="ring-pulse"></div>
+  <div class="ring-time" id="ringTimeDisplay"></div>
+  <div class="ring-label" id="ringLabelDisplay"></div>
+  <button class="ring-dismiss" onclick="dismissAlarm()">Dismiss</button>
+</div>
+
+<script>
+const DAYS=['Su','Mo','Tu','We','Th','Fr','Sa'];
+let alarms=JSON.parse(localStorage.getItem('clk_alarms')||'[]');
+let swRunning=false,swStart=0,swElapsed=0,swInterval=null,laps=[],lapCount=0;
+let ringingAlarmId=null;
+
+function showTab(t){
+  ['clock','stopwatch','alarm'].forEach(x=>{
+    document.getElementById('tab-'+x).style.display=x===t?'':'none';
+    document.querySelectorAll('.tab')[['clock','stopwatch','alarm'].indexOf(x)].classList.toggle('active',x===t);
+  });
+}
+
+(function(){
+  const g=document.getElementById('ticks');
+  for(let i=0;i<60;i++){
+    const a=(i*6-90)*Math.PI/180,r=i%5===0?88:93;
+    const x1=110+r*Math.cos(a),y1=110+r*Math.sin(a);
+    const x2=110+96*Math.cos(a),y2=110+96*Math.sin(a);
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x1);line.setAttribute('y1',y1);
+    line.setAttribute('x2',x2);line.setAttribute('y2',y2);
+    line.setAttribute('stroke',i%5===0?'#e8e6e0':'#3a3a3e');
+    line.setAttribute('stroke-width',i%5===0?'2':'1');
+    g.appendChild(line);
+  }
+})();
+
+function rotateHand(id,deg){
+  const el=document.getElementById(id);
+  const r=(deg-90)*Math.PI/180;
+  const len=id==='hrHand'?62:id==='minHand'?82:88;
+  el.setAttribute('x2',110+len*Math.cos(r));
+  el.setAttribute('y2',110+len*Math.sin(r));
+}
+
+const dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function updateClock(){
+  const now=new Date();
+  const h=now.getHours(),m=now.getMinutes(),s=now.getSeconds();
+  rotateHand('hrHand',(h%12)*30+m*0.5);
+  rotateHand('minHand',m*6+s*0.1);
+  rotateHand('secHand',s*6);
+  const h12=h%12||12;
+  document.getElementById('digitalTime').textContent=String(h12).padStart(2,'0')+':'+String(m).padStart(2,'0');
+  document.getElementById('ampmLabel').textContent=h<12?'AM':'PM';
+  document.getElementById('dateStr').textContent=dayNames[now.getDay()]+', '+monthNames[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+  checkAlarms(now);
+}
+
+function checkAlarms(now){
+  if(ringingAlarmId!==null)return;
+  const h=now.getHours(),m=now.getMinutes(),s=now.getSeconds();
+  if(s!==0)return;
+  const h12=h%12||12,ampm=h<12?'AM':'PM';
+  alarms.forEach(a=>{
+    if(!a.on)return;
+    if(parseInt(a.hour)===h12&&parseInt(a.min)===m&&a.ampm===ampm){
+      const day=now.getDay();
+      if(a.days.length===0||a.days.includes(day)) ringAlarm(a);
+    }
+  });
+}
+
+function ringAlarm(a){
+  ringingAlarmId=a.id;
+  document.getElementById('ringTimeDisplay').textContent=a.hour+':'+a.min+' '+a.ampm;
+  document.getElementById('ringLabelDisplay').textContent=a.label||'Alarm';
+  document.getElementById('ringingOverlay').style.display='flex';
+  try{const ac=new AudioContext();const osc=ac.createOscillator();const gain=ac.createGain();osc.connect(gain);gain.connect(ac.destination);osc.frequency.setValueAtTime(880,ac.currentTime);osc.frequency.setValueAtTime(660,ac.currentTime+0.3);osc.frequency.setValueAtTime(880,ac.currentTime+0.6);gain.gain.setValueAtTime(0.3,ac.currentTime);osc.start();osc.stop(ac.currentTime+0.9);}catch(e){}
+}
+
+function dismissAlarm(){
+  document.getElementById('ringingOverlay').style.display='none';
+  ringingAlarmId=null;
+}
+
+function pad(n){return String(Math.floor(n)).padStart(2,'0')}
+function fmtSW(ms){
+  const m=Math.floor(ms/60000),s=Math.floor((ms%60000)/1000),cs=Math.floor((ms%1000)/10);
+  return `${pad(m)}:${pad(s)}<span class="sw-ms">.${pad(cs)}</span>`;
+}
+function updateSW(){
+  document.getElementById('swDisplay').innerHTML=fmtSW(swElapsed+(swRunning?Date.now()-swStart:0));
+}
+function swToggle(){
+  swRunning=!swRunning;
+  if(swRunning){swStart=Date.now();swInterval=setInterval(updateSW,50);}
+  else{swElapsed+=Date.now()-swStart;clearInterval(swInterval);}
+  document.getElementById('swStartBtn').textContent=swRunning?'Stop':'Start';
+  document.getElementById('swStartBtn').className='sw-btn '+(swRunning?'':'primary');
+  document.getElementById('swLapBtn').disabled=!swRunning;
+}
+function swReset(){
+  clearInterval(swInterval);swRunning=false;swElapsed=0;lapCount=0;laps=[];
+  document.getElementById('swDisplay').innerHTML='00:00<span class="sw-ms">.00</span>';
+  document.getElementById('swStartBtn').textContent='Start';
+  document.getElementById('swStartBtn').className='sw-btn primary';
+  document.getElementById('swLapBtn').disabled=true;
+  document.getElementById('lapsList').innerHTML='';
+}
+function swLap(){
+  lapCount++;
+  laps.unshift({n:lapCount,t:swElapsed+(Date.now()-swStart)});
+  document.getElementById('lapsList').innerHTML=laps.map(l=>`<div class="lap-item"><span>Lap ${l.n}</span><span>${fmtSW(l.t).replace(/<[^>]+>/g,'')}</span></div>`).join('');
+}
+
+(function(){
+  const row=document.getElementById('daysRow');
+  DAYS.forEach(d=>{
+    const btn=document.createElement('button');
+    btn.className='day-pill';btn.textContent=d;
+    btn.onclick=()=>btn.classList.toggle('on');
+    row.appendChild(btn);
+  });
+})();
+
+function saveAlarms(){localStorage.setItem('clk_alarms',JSON.stringify(alarms));}
+function renderAlarms(){
+  const list=document.getElementById('alarmsList');
+  if(alarms.length===0){list.innerHTML='<div class="no-alarms">No alarms set</div>';return;}
+  list.innerHTML=alarms.map(a=>`
+    <div class="alarm-card ${a.on?'':'off'}">
+      <div>
+        <div class="alarm-time-big">${a.hour}:${a.min}<span class="am">${a.ampm}</span></div>
+      </div>
+      <div class="alarm-meta">
+        <div class="alarm-name">${a.label||'Alarm'}</div>
+        <div class="alarm-days-display">${a.days.length===0?'Once':a.days.map(d=>DAYS[d]).join(' ')}</div>
+      </div>
+      <button class="toggle ${a.on?'on':''}" onclick="toggleAlarm('${a.id}')"></button>
+      <button class="del-btn" onclick="delAlarm('${a.id}')">✕</button>
+    </div>
+  `).join('');
+}
+function addAlarm(){
+  const h=String(document.getElementById('aHour').value).padStart(2,'0');
+  const m=String(document.getElementById('aMin').value).padStart(2,'0');
+  const ap=document.getElementById('aAmpm').value;
+  const lbl=document.getElementById('aLabel').value.trim();
+  const selectedDays=[...document.querySelectorAll('.day-pill.on')].map(el=>DAYS.indexOf(el.textContent));
+  alarms.unshift({id:Date.now().toString(),hour:h,min:m,ampm:ap,label:lbl,days:selectedDays,on:true});
+  saveAlarms();renderAlarms();
+  document.getElementById('aLabel').value='';
+  document.querySelectorAll('.day-pill').forEach(p=>p.classList.remove('on'));
+}
+function toggleAlarm(id){
+  const a=alarms.find(x=>x.id===id);if(a){a.on=!a.on;saveAlarms();renderAlarms();}
+}
+function delAlarm(id){
+  alarms=alarms.filter(x=>x.id!==id);saveAlarms();renderAlarms();
+}
+
+renderAlarms();
+setInterval(updateClock,1000);
+updateClock();
+</script>
+</body>
+</html>
