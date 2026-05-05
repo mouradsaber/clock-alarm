@@ -85,9 +85,16 @@ body.night-mode{--bg:#000;--bg2:#0a0a0a;--bg3:#111;--text:#ff6b00;--text2:#cc550
 .snooze-opts{display:flex;gap:6px}
 .snooze-pill{flex:1;padding:8px 4px;border-radius:8px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;text-align:center;transition:all 0.2s}
 .snooze-pill.on{background:var(--gold);border-color:var(--gold);color:#0d0d0f}
-.sound-sel{display:flex;gap:6px;flex-wrap:wrap}
-.sound-pill{padding:6px 12px;border-radius:20px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;transition:all 0.2s}
-.sound-pill.on{background:var(--gold);border-color:var(--gold);color:#0d0d0f}
+.sound-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:6px}
+.sound-card{background:var(--bg);border:0.5px solid var(--border2);border-radius:10px;padding:9px 6px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative}
+.sound-card:hover{border-color:var(--gold)}
+.sound-card.on{border-color:var(--gold);background:rgba(232,200,122,0.08)}
+.sound-card-icon{font-size:18px;display:block;margin-bottom:3px}
+.sound-card-name{font-size:11px;color:var(--text2);font-weight:500}
+.sound-card-sub{font-size:10px;color:var(--text3);margin-top:1px}
+.sound-card.on .sound-card-name{color:var(--gold)}
+.sound-preview-bar{background:var(--bg);border:0.5px solid var(--border);border-radius:8px;padding:6px 10px;margin-top:4px;display:flex;align-items:center;justify-content:center}
+
 
 /* STOPWATCH */
 .sw-wrap{padding:20px 20px;text-align:center}
@@ -126,6 +133,63 @@ body.night-mode{--bg:#000;--bg2:#0a0a0a;--bg3:#111;--text:#ff6b00;--text2:#cc550
 .add-timer-row{display:flex;gap:8px;margin-bottom:14px}
 .dur-inp{flex:1;background:var(--bg2);border:0.5px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'DM Sans',sans-serif}
 .dur-inp:focus{border-color:var(--gold)}
+
+/* INTERVAL TIMER */
+.itv-wrap{padding:16px}
+.itv-tabs{display:flex;gap:8px;margin-bottom:16px}
+.itv-tab{flex:1;padding:9px;border-radius:10px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);font-size:13px;cursor:pointer;text-align:center;transition:all 0.2s}
+.itv-tab.active{background:var(--gold);border-color:var(--gold);color:#0d0d0f;font-weight:500}
+.itv-builder{display:flex;flex-direction:column;gap:10px}
+.itv-name-row{display:flex;gap:8px;align-items:center;margin-bottom:4px}
+.itv-name-inp{flex:1;background:var(--bg2);border:0.5px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'DM Sans',sans-serif}
+.itv-name-inp:focus{border-color:var(--gold)}
+.itv-intervals{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.itv-interval-row{background:var(--bg2);border:0.5px solid var(--border);border-radius:10px;padding:12px;display:flex;align-items:center;gap:8px}
+.itv-color-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;cursor:pointer}
+.itv-interval-label{flex:1;background:transparent;border:none;color:var(--text);font-size:13px;outline:none;font-family:'DM Sans',sans-serif}
+.itv-dur-inp{width:72px;background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;padding:6px 8px;color:var(--text);font-size:13px;text-align:center;outline:none;font-family:'DM Sans',sans-serif}
+.itv-dur-inp:focus{border-color:var(--gold)}
+.itv-del-row{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:2px;flex-shrink:0}
+.itv-del-row:hover{color:var(--red)}
+.itv-drag-handle{color:var(--text3);cursor:grab;font-size:14px;padding:2px;flex-shrink:0}
+.itv-add-row-btn{width:100%;padding:10px;border-radius:10px;border:0.5px dashed var(--border2);background:transparent;color:var(--text3);font-size:13px;cursor:pointer;transition:all 0.2s}
+.itv-add-row-btn:hover{border-color:var(--gold);color:var(--gold)}
+.itv-opts-row{display:flex;gap:8px;margin-bottom:10px}
+.itv-opt{flex:1;display:flex;flex-direction:column;gap:4px}
+.itv-opt label{font-size:11px;color:var(--text3)}
+.itv-opt input,.itv-opt select{background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;width:100%}
+.itv-opt input:focus,.itv-opt select:focus{border-color:var(--gold)}
+.itv-save-row{display:flex;gap:8px}
+.itv-save-btn{flex:1;padding:12px;background:var(--gold);border:none;border-radius:12px;color:#0d0d0f;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+.itv-saved-list{display:flex;flex-direction:column;gap:10px}
+.itv-saved-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:14px 16px}
+.itv-saved-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.itv-saved-name{font-size:15px;font-weight:500}
+.itv-saved-meta{font-size:12px;color:var(--text3);margin-bottom:10px}
+.itv-saved-intervals{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.itv-seg{padding:4px 10px;border-radius:20px;font-size:11px;color:#fff;display:flex;align-items:center;gap:4px}
+.itv-saved-btns{display:flex;gap:8px}
+.itv-run-btn{flex:1;padding:9px;background:var(--gold);border:none;border-radius:10px;color:#0d0d0f;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+.itv-edit-btn{padding:9px 14px;border:0.5px solid var(--border2);border-radius:10px;background:transparent;color:var(--text2);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.itv-del-saved{padding:9px 12px;border:0.5px solid var(--border2);border-radius:10px;background:transparent;color:var(--red);font-size:13px;cursor:pointer}
+/* ACTIVE INTERVAL RUNNER */
+.itv-runner{position:fixed;inset:0;z-index:160;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;transition:background 0.6s}
+.itv-runner-name{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px}
+.itv-runner-phase{font-size:22px;font-weight:500;color:#fff;margin-bottom:4px}
+.itv-runner-time{font-family:'Bebas Neue',cursive;font-size:96px;color:#fff;line-height:1;margin-bottom:8px}
+.itv-runner-next{font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:20px}
+.itv-runner-rounds{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:24px}
+.itv-runner-prog{width:100%;max-width:320px;margin:0 auto 28px}
+.itv-runner-prog-track{height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.itv-runner-prog-fill{height:100%;background:#fff;border-radius:3px;transition:width 0.5s linear}
+.itv-runner-segs{display:flex;gap:3px}
+.itv-runner-seg{flex:1;height:4px;border-radius:2px;opacity:0.4}
+.itv-runner-seg.done{opacity:1}
+.itv-runner-seg.active-seg{opacity:1;box-shadow:0 0 6px rgba(255,255,255,0.6)}
+.itv-runner-btns{display:flex;gap:12px}
+.itv-runner-btn{padding:13px 28px;border-radius:40px;border:1.5px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:#fff;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif;backdrop-filter:blur(4px)}
+.itv-runner-btn.primary{background:rgba(255,255,255,0.9);color:#222;border-color:transparent;font-weight:500}
+.itv-runner-btn.stop-btn{border-color:rgba(255,80,80,0.5);color:#ff9090}
 
 /* WORLD CLOCK */
 .wc-wrap{padding:16px}
@@ -208,6 +272,7 @@ body.night-mode{--bg:#000;--bg2:#0a0a0a;--bg3:#111;--text:#ff6b00;--text2:#cc550
     <div class="tab" onclick="showTab('stopwatch')">Stopwatch</div>
     <div class="tab" onclick="showTab('timer')">Timer</div>
     <div class="tab" onclick="showTab('worldclock')">World</div>
+    <div class="tab" onclick="showTab('interval')">Intervals</div>
   </div>
   <div class="content">
 
@@ -269,12 +334,28 @@ body.night-mode{--bg:#000;--bg2:#0a0a0a;--bg3:#111;--text:#ff6b00;--text2:#cc550
               </select>
             </div>
           </div>
-          <div class="label-s" style="margin-bottom:6px">Sound</div>
-          <div class="sound-sel" id="soundSel">
-            <div class="sound-pill on" data-s="beep">Beep</div>
-            <div class="sound-pill" data-s="chime">Chime</div>
-            <div class="sound-pill" data-s="buzz">Buzz</div>
-            <div class="sound-pill" data-s="gentle">Gentle</div>
+          <div class="label-s" style="margin-bottom:8px">Alarm Sound</div>
+          <div class="sound-grid" id="soundSel"></div>
+          <div class="sound-preview-bar" id="soundPreviewBar" style="display:none">
+            <canvas id="waveCanvas" width="260" height="36"></canvas>
+          </div>
+          <div class="row2" style="margin-top:12px">
+            <div class="half">
+              <div class="label-s">Volume</div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="font-size:13px">🔈</span>
+                <input type="range" id="aVolume" min="1" max="10" value="7" style="flex:1;accent-color:var(--gold)"/>
+                <span style="font-size:13px">🔊</span>
+              </div>
+            </div>
+            <div class="half">
+              <div class="label-s">Fade In</div>
+              <div class="snooze-opts" id="fadeOpts">
+                <div class="snooze-pill on" data-v="0">Off</div>
+                <div class="snooze-pill" data-v="15">15s</div>
+                <div class="snooze-pill" data-v="30">30s</div>
+              </div>
+            </div>
           </div>
           <br/>
           <button class="add-btn" onclick="addAlarm()">+ Add Alarm</button>
@@ -315,6 +396,55 @@ body.night-mode{--bg:#000;--bg2:#0a0a0a;--bg3:#111;--text:#ff6b00;--text2:#cc550
       </div>
     </div>
 
+    <!-- INTERVAL TIMER -->
+    <div id="tab-interval" style="display:none">
+      <div class="itv-wrap">
+        <div class="itv-tabs">
+          <div class="itv-tab active" id="itvTabBuild" onclick="switchItvTab('build')">🛠 Build</div>
+          <div class="itv-tab" id="itvTabSaved" onclick="switchItvTab('saved')">📂 Saved</div>
+        </div>
+
+        <!-- BUILDER -->
+        <div id="itvBuilder" class="itv-builder">
+          <div class="itv-name-row">
+            <input class="itv-name-inp" id="itvName" placeholder="Program name (e.g. Run/Walk 5K)" type="text"/>
+          </div>
+          <div class="itv-opts-row">
+            <div class="itv-opt">
+              <label>Rounds</label>
+              <input type="number" id="itvRounds" value="1" min="1" max="99"/>
+            </div>
+            <div class="itv-opt">
+              <label>Rest between rounds</label>
+              <input type="text" id="itvRestBetween" placeholder="e.g. 1m, 30s" value=""/>
+            </div>
+            <div class="itv-opt">
+              <label>Sound cue</label>
+              <select id="itvSound">
+                <option value="beep">Beep</option>
+                <option value="chime">Chime</option>
+                <option value="buzz">Buzz</option>
+                <option value="gentle">Gentle</option>
+              </select>
+            </div>
+          </div>
+          <div class="label-s" style="margin-bottom:6px">Intervals <span style="color:var(--text3);font-weight:normal">(drag to reorder)</span></div>
+          <div class="itv-intervals" id="itvIntervals"></div>
+          <button class="itv-add-row-btn" onclick="addItvRow()">+ Add Interval</button>
+          <div class="itv-save-row" style="margin-top:10px">
+            <button class="itv-save-btn" onclick="saveItvProgram()">💾 Save Program</button>
+            <button class="itv-save-btn" style="background:var(--green);flex:0.6" onclick="quickRunItv()">▶ Run</button>
+          </div>
+        </div>
+
+        <!-- SAVED LIST -->
+        <div id="itvSaved" style="display:none">
+          <div class="itv-saved-list" id="itvSavedList"></div>
+          <div id="itvNoSaved" class="no-items" style="display:none">No saved programs yet — build one!</div>
+        </div>
+      </div>
+    </div>
+
     <!-- WORLD CLOCK -->
     <div id="tab-worldclock" style="display:none">
       <div class="wc-wrap">
@@ -341,6 +471,24 @@ body.night-mode{--bg:#000;--bg2:#0a0a0a;--bg3:#111;--text:#ff6b00;--text2:#cc550
   <div class="ring-btns" id="ringBtns">
     <button class="ring-snooze" id="ringSnoozeBtn" onclick="snoozeAlarm()">Snooze</button>
     <button class="ring-dismiss" id="ringDismissBtn" onclick="dismissAlarm()">Dismiss</button>
+  </div>
+</div>
+
+<!-- INTERVAL RUNNER -->
+<div class="itv-runner" id="itvRunner" style="display:none;background:#1a7a3a">
+  <div class="itv-runner-name" id="itvRunnerName"></div>
+  <div class="itv-runner-phase" id="itvRunnerPhase"></div>
+  <div class="itv-runner-time" id="itvRunnerTime">00:00</div>
+  <div class="itv-runner-next" id="itvRunnerNext"></div>
+  <div class="itv-runner-rounds" id="itvRunnerRounds"></div>
+  <div class="itv-runner-prog">
+    <div class="itv-runner-prog-track"><div class="itv-runner-prog-fill" id="itvProgFill" style="width:0%"></div></div>
+    <div class="itv-runner-segs" id="itvRunnerSegs"></div>
+  </div>
+  <div class="itv-runner-btns">
+    <button class="itv-runner-btn stop-btn" onclick="stopItvRunner()">✕ Stop</button>
+    <button class="itv-runner-btn primary" id="itvRunnerPauseBtn" onclick="pauseItvRunner()">⏸ Pause</button>
+    <button class="itv-runner-btn" onclick="skipItvInterval()">Skip ›</button>
   </div>
 </div>
 
@@ -401,7 +549,8 @@ let S = JSON.parse(localStorage.getItem('cp_state') || 'null') || {
     {city:'London',tz:'Europe/London',country:'GB'},
     {city:'Tokyo',tz:'Asia/Tokyo',country:'JP'}
   ],
-  fmt24:false,showSec:true,nightMode:false,crescendo:true,vib:true
+  fmt24:false,showSec:true,nightMode:false,crescendo:true,vib:true,
+  itvPrograms:[]
 };
 let timersList=[]; // runtime only
 let swRunning=false,swStart=0,swElapsed=0,swInterval=null,laps=[],lapCount=0;
@@ -413,7 +562,7 @@ let acCtx=null;
 function save(){localStorage.setItem('cp_state',JSON.stringify(S));}
 
 // ── TABS ──────────────────────────────────────────────────────────────
-const TABS=['clock','alarm','stopwatch','timer','worldclock'];
+const TABS=['clock','alarm','stopwatch','timer','worldclock','interval'];
 function showTab(t){
   TABS.forEach((x,i)=>{
     document.getElementById('tab-'+x).style.display=x===t?'':'none';
@@ -421,6 +570,7 @@ function showTab(t){
   });
   if(t==='worldclock') renderWorldClocks();
   if(t==='alarm'){renderAlarms();updateNextAlarm();}
+  if(t==='interval'){initItvBuilder();switchItvTab('build');}
 }
 
 // ── ANALOG CLOCK ──────────────────────────────────────────────────────
@@ -518,51 +668,174 @@ function getNextAlarmTime(a,now){
 }
 
 // ── ALARM SOUNDS ───────────────────────────────────────────────────────
+const SOUNDS={
+  beep:      {icon:'📳',name:'Beep',sub:'Classic',     fn:(ac,vol,t)=>singleTone(ac,vol,t,880,'sine',  [[0,0.3],[0.4,0.3],[0.8,0.3]])},
+  digital:   {icon:'💻',name:'Digital',sub:'Retro',    fn:(ac,vol,t)=>singleTone(ac,vol,t,1200,'square',[[0,0.1],[0.15,0.1],[0.3,0.1],[0.45,0.1],[0.6,0.1]])},
+  chime:     {icon:'🔔',name:'Chime',sub:'Melodic',    fn:(ac,vol,t)=>melody(ac,vol,t,[523,659,784,1047],'sine',[0,0.3,0.6,0.9],[0.5,0.5,0.7,0.8])},
+  bells:     {icon:'🎵',name:'Bells',sub:'Holiday',    fn:(ac,vol,t)=>melody(ac,vol,t,[784,880,988,880,784],'sine',[0,0.2,0.4,0.6,0.8],[0.25,0.25,0.25,0.25,0.3])},
+  gentle:    {icon:'🌅',name:'Gentle',sub:'Soft wake',  fn:(ac,vol,t)=>melody(ac,vol,t,[392,440,494,523],'sine',[0,0.5,1.0,1.5],[0.7,0.7,0.7,0.8])},
+  pulse:     {icon:'💓',name:'Pulse',sub:'Heartbeat',  fn:(ac,vol,t)=>pulse(ac,vol,t)},
+  buzz:      {icon:'📳',name:'Buzz',sub:'Vibration',   fn:(ac,vol,t)=>singleTone(ac,vol,t,80,'square', [[0,0.12],[0.18,0.12],[0.36,0.12],[0.54,0.12]])},
+  siren:     {icon:'🚨',name:'Siren',sub:'Urgent',     fn:(ac,vol,t)=>siren(ac,vol,t)},
+  marimba:   {icon:'🎶',name:'Marimba',sub:'Warm',     fn:(ac,vol,t)=>melody(ac,vol,t,[523,784,659,1047],'sine',[0,0.22,0.44,0.66],[0.3,0.3,0.3,0.5])},
+  ascending: {icon:'⬆️',name:'Ascend',sub:'Rising',   fn:(ac,vol,t)=>ascending(ac,vol,t)},
+  rooster:   {icon:'🐓',name:'Rooster',sub:'Natural',  fn:(ac,vol,t)=>rooster(ac,vol,t)},
+  radar:     {icon:'📡',name:'Radar',sub:'Scanning',   fn:(ac,vol,t)=>radar(ac,vol,t)},
+};
+
 function getAudioCtx(){
-  if(!acCtx) acCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(!acCtx||acCtx.state==='closed') acCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(acCtx.state==='suspended') acCtx.resume();
   return acCtx;
 }
 
-function playSound(type,crescendo=false){
+function singleTone(ac,vol,startT,freq,type,beats){
+  beats.forEach(([delay,dur])=>{
+    const osc=ac.createOscillator(),g=ac.createGain();
+    osc.connect(g);g.connect(ac.destination);
+    osc.frequency.value=freq;osc.type=type;
+    g.gain.setValueAtTime(0,startT+delay);
+    g.gain.linearRampToValueAtTime(vol,startT+delay+0.04);
+    g.gain.setValueAtTime(vol,startT+delay+dur-0.04);
+    g.gain.linearRampToValueAtTime(0,startT+delay+dur);
+    osc.start(startT+delay);osc.stop(startT+delay+dur+0.05);
+  });
+}
+
+function melody(ac,vol,startT,freqs,type,delays,durs){
+  freqs.forEach((freq,i)=>{
+    const osc=ac.createOscillator(),g=ac.createGain();
+    osc.connect(g);g.connect(ac.destination);
+    osc.frequency.value=freq;osc.type=type;
+    g.gain.setValueAtTime(0,startT+delays[i]);
+    g.gain.linearRampToValueAtTime(vol,startT+delays[i]+0.05);
+    g.gain.exponentialRampToValueAtTime(0.001,startT+delays[i]+durs[i]);
+    osc.start(startT+delays[i]);osc.stop(startT+delays[i]+durs[i]+0.05);
+  });
+}
+
+function pulse(ac,vol,startT){
+  for(let i=0;i<4;i++){
+    const osc=ac.createOscillator(),g=ac.createGain();
+    osc.connect(g);g.connect(ac.destination);
+    osc.frequency.value=440;osc.type='sine';
+    g.gain.setValueAtTime(0,startT+i*0.25);
+    g.gain.linearRampToValueAtTime(vol,startT+i*0.25+0.02);
+    g.gain.exponentialRampToValueAtTime(0.001,startT+i*0.25+0.22);
+    osc.start(startT+i*0.25);osc.stop(startT+i*0.25+0.25);
+  }
+}
+
+function siren(ac,vol,startT){
+  const osc=ac.createOscillator(),g=ac.createGain();
+  osc.connect(g);g.connect(ac.destination);
+  osc.type='sawtooth';
+  osc.frequency.setValueAtTime(400,startT);
+  osc.frequency.linearRampToValueAtTime(900,startT+0.5);
+  osc.frequency.linearRampToValueAtTime(400,startT+1.0);
+  g.gain.setValueAtTime(vol,startT);
+  g.gain.setValueAtTime(vol,startT+0.95);
+  g.gain.linearRampToValueAtTime(0,startT+1.0);
+  osc.start(startT);osc.stop(startT+1.05);
+}
+
+function ascending(ac,vol,startT){
+  const freqs=[261,294,330,349,392,440,494,523];
+  freqs.forEach((f,i)=>{
+    const osc=ac.createOscillator(),g=ac.createGain();
+    osc.connect(g);g.connect(ac.destination);
+    osc.frequency.value=f;osc.type='sine';
+    g.gain.setValueAtTime(0,startT+i*0.13);
+    g.gain.linearRampToValueAtTime(vol*(0.5+i*0.07),startT+i*0.13+0.04);
+    g.gain.exponentialRampToValueAtTime(0.001,startT+i*0.13+0.2);
+    osc.start(startT+i*0.13);osc.stop(startT+i*0.13+0.25);
+  });
+}
+
+function rooster(ac,vol,startT){
+  [[400,0],[600,0.15],[900,0.3],[700,0.5],[500,0.7],[300,0.9]].forEach(([f,d])=>{
+    const osc=ac.createOscillator(),g=ac.createGain();
+    osc.connect(g);g.connect(ac.destination);
+    osc.type='sawtooth';osc.frequency.value=f;
+    g.gain.setValueAtTime(0,startT+d);
+    g.gain.linearRampToValueAtTime(vol*0.4,startT+d+0.05);
+    g.gain.exponentialRampToValueAtTime(0.001,startT+d+0.18);
+    osc.start(startT+d);osc.stop(startT+d+0.2);
+  });
+}
+
+function radar(ac,vol,startT){
+  for(let i=0;i<3;i++){
+    const osc=ac.createOscillator(),g=ac.createGain();
+    osc.connect(g);g.connect(ac.destination);
+    osc.type='sine';
+    osc.frequency.setValueAtTime(1500,startT+i*0.4);
+    osc.frequency.exponentialRampToValueAtTime(300,startT+i*0.4+0.35);
+    g.gain.setValueAtTime(vol,startT+i*0.4);
+    g.gain.exponentialRampToValueAtTime(0.001,startT+i*0.4+0.35);
+    osc.start(startT+i*0.4);osc.stop(startT+i*0.4+0.4);
+  }
+}
+
+function playSound(type,vol=0.3){
   try{
     const ac=getAudioCtx();
-    const patterns={
-      beep:[[880,0,0.3],[880,0.4,0.3],[880,0.8,0.3]],
-      chime:[[523,0,0.5],[659,0.3,0.5],[784,0.6,0.7],[1047,0.9,0.8]],
-      buzz:[[120,0,0.15],[120,0.2,0.15],[120,0.4,0.15],[120,0.6,0.15]],
-      gentle:[[392,0,0.6],[494,0.4,0.6],[587,0.8,0.6]]
-    };
-    const pats=patterns[type]||patterns.beep;
-    pats.forEach(([freq,delay,dur])=>{
-      const osc=ac.createOscillator();
-      const gain=ac.createGain();
-      osc.connect(gain);gain.connect(ac.destination);
-      osc.frequency.value=freq;
-      osc.type=type==='buzz'?'square':'sine';
-      const vol=crescendo?0.05:0.3;
-      gain.gain.setValueAtTime(0,ac.currentTime+delay);
-      gain.gain.linearRampToValueAtTime(vol,ac.currentTime+delay+0.05);
-      gain.gain.setValueAtTime(vol,ac.currentTime+delay+dur-0.05);
-      gain.gain.linearRampToValueAtTime(0,ac.currentTime+delay+dur);
-      osc.start(ac.currentTime+delay);
-      osc.stop(ac.currentTime+delay+dur);
-    });
-  } catch(e){}
+    const s=SOUNDS[type]||SOUNDS.beep;
+    s.fn(ac,vol,ac.currentTime);
+    drawWavePreview(type);
+  } catch(e){console.log(e);}
+}
+
+function drawWavePreview(type){
+  const canvas=document.getElementById('waveCanvas');
+  if(!canvas) return;
+  const ctx2=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height;
+  ctx2.clearRect(0,0,w,h);
+  ctx2.strokeStyle='#e8c87a';ctx2.lineWidth=2;ctx2.beginPath();
+  const waveforms={
+    beep:     (x)=>x%60<30?0.8:0,
+    digital:  (x)=>x%30<15?0.9:-0.9,
+    chime:    (x)=>Math.sin(x*0.3)*Math.exp(-x*0.01),
+    bells:    (x)=>Math.sin(x*0.25)*Math.exp(-x*0.008),
+    gentle:   (x)=>Math.sin(x*0.15)*0.5,
+    pulse:    (x)=>Math.exp(-((x%64)*0.1))*Math.sin(x*0.4),
+    buzz:     (x)=>((x%20)<10?1:-1)*0.8,
+    siren:    (x)=>Math.sin(x*0.05+Math.sin(x*0.02)*3)*0.9,
+    marimba:  (x)=>Math.sin(x*0.35)*Math.exp(-x*0.012),
+    ascending:(x)=>Math.sin(x*(0.1+x*0.002))*0.7,
+    rooster:  (x)=>Math.sin(x*0.4)*Math.exp(-x*0.005)*((x%40)<20?1:0.3),
+    radar:    (x)=>Math.sin(x*0.5)*Math.exp(-((x%80)*0.03)),
+  };
+  const fn=waveforms[type]||(x=>Math.sin(x*0.2));
+  for(let i=0;i<w;i++){
+    const y=h/2-fn(i)*h*0.42;
+    i===0?ctx2.moveTo(i,y):ctx2.lineTo(i,y);
+  }
+  ctx2.stroke();
+  document.getElementById('soundPreviewBar').style.display='flex';
 }
 
 let alarmSoundInterval=null;
-function startAlarmSound(sound,crescendo){
+let alarmFadeCount=0;
+function startAlarmSound(sound,fadeSec,volume){
   stopAlarmSound();
+  const maxVol=volume||0.3;
   let count=0;
+  const fadeSteps=fadeSec>0?Math.ceil(fadeSec/1.5):0;
   alarmSoundInterval=setInterval(()=>{
     count++;
-    playSound(sound,crescendo&&count<5);
-  },1200);
-  playSound(sound,false);
+    let vol=maxVol;
+    if(fadeSteps>0&&count<=fadeSteps) vol=maxVol*(count/fadeSteps);
+    playSound(sound,vol);
+  },1500);
+  const initVol=fadeSteps>0?maxVol*0.1:maxVol;
+  playSound(sound,initVol);
 }
 function stopAlarmSound(){
   if(alarmSoundInterval){clearInterval(alarmSoundInterval);alarmSoundInterval=null;}
 }
+
 
 // ── CHECK ALARMS ───────────────────────────────────────────────────────
 function checkAlarms(now){
@@ -588,7 +861,8 @@ function ringAlarm(a){
   ringingAlarm=a;
   document.getElementById('ringTime').textContent=a.hour+':'+a.min+(S.fmt24?'':' '+a.ampm);
   document.getElementById('ringLabel').textContent=a.label||'Alarm';
-  document.getElementById('ringSoundLabel').textContent='Sound: '+a.sound;
+  const sndInfo=SOUNDS[a.sound]||SOUNDS.beep;
+  document.getElementById('ringSoundLabel').textContent=sndInfo.icon+' '+sndInfo.name+(a.fade?' · Fade in '+a.fade+'s':'');
   document.getElementById('ringSnoozeBtn').textContent='Snooze '+a.snooze+'m';
   const overlay=document.getElementById('ringOverlay');
   overlay.style.display='flex';
@@ -610,7 +884,7 @@ function ringAlarm(a){
     document.getElementById('ringDismissBtn').style.display='';
     document.getElementById('ringSnoozeBtn').style.display='';
   }
-  startAlarmSound(a.sound,S.crescendo);
+  startAlarmSound(a.sound, a.fade||0, (a.volume||7)/10*0.5);
   if(S.vib&&navigator.vibrate) navigator.vibrate([500,200,500,200,500]);
 }
 
@@ -650,7 +924,26 @@ function snoozeAlarm(){
 }
 
 // ── ALARM UI ───────────────────────────────────────────────────────────
+let snoozeMin=5,selectedSound='beep',selectedFade=0;
+
 (function(){
+  // sound grid
+  const grid=document.getElementById('soundSel');
+  Object.entries(SOUNDS).forEach(([key,s])=>{
+    const el=document.createElement('div');
+    el.className='sound-card'+(key==='beep'?' on':'');
+    el.dataset.s=key;
+    el.innerHTML=`<span class="sound-card-icon">${s.icon}</span><div class="sound-card-name">${s.name}</div><div class="sound-card-sub">${s.sub}</div>`;
+    el.onclick=()=>{
+      document.querySelectorAll('.sound-card').forEach(x=>x.classList.remove('on'));
+      el.classList.add('on');
+      selectedSound=key;
+      const vol=parseInt(document.getElementById('aVolume').value)/10*0.5;
+      playSound(key,vol);
+    };
+    grid.appendChild(el);
+  });
+  // day pills
   const row=document.getElementById('aDays');
   DAY_SHORT.forEach(d=>{
     const b=document.createElement('button');
@@ -658,17 +951,18 @@ function snoozeAlarm(){
     b.onclick=()=>b.classList.toggle('on');
     row.appendChild(b);
   });
-  document.querySelectorAll('.snooze-pill').forEach(p=>{
+  // snooze pills
+  document.querySelectorAll('#snoozeOpts .snooze-pill').forEach(p=>{
     p.onclick=()=>{
-      document.querySelectorAll('.snooze-pill').forEach(x=>x.classList.remove('on'));
+      document.querySelectorAll('#snoozeOpts .snooze-pill').forEach(x=>x.classList.remove('on'));
       p.classList.add('on');snoozeMin=parseInt(p.dataset.v);
     };
   });
-  document.querySelectorAll('.sound-pill').forEach(p=>{
+  // fade pills
+  document.querySelectorAll('#fadeOpts .snooze-pill').forEach(p=>{
     p.onclick=()=>{
-      document.querySelectorAll('.sound-pill').forEach(x=>x.classList.remove('on'));
-      p.classList.add('on');selectedSound=p.dataset.s;
-      playSound(selectedSound);
+      document.querySelectorAll('#fadeOpts .snooze-pill').forEach(x=>x.classList.remove('on'));
+      p.classList.add('on');selectedFade=parseInt(p.dataset.v);
     };
   });
 })();
@@ -680,7 +974,8 @@ function addAlarm(){
   const lbl=document.getElementById('aLbl').value.trim();
   const days=[...document.querySelectorAll('#aDays .dpill.on')].map(el=>DAY_SHORT.indexOf(el.textContent));
   const challenge=document.getElementById('aChallenge').value;
-  S.alarms.unshift({id:Date.now().toString(),hour:h,min:m,ampm:ap,label:lbl,days,on:true,snooze:snoozeMin,sound:selectedSound,challenge});
+  const volume=parseInt(document.getElementById('aVolume').value);
+  S.alarms.unshift({id:Date.now().toString(),hour:h,min:m,ampm:ap,label:lbl,days,on:true,snooze:snoozeMin,sound:selectedSound,challenge,volume,fade:selectedFade});
   save();renderAlarms();updateNextAlarm();
   document.getElementById('aLbl').value='';
   document.querySelectorAll('#aDays .dpill').forEach(p=>p.classList.remove('on'));
@@ -689,22 +984,25 @@ function addAlarm(){
 function renderAlarms(){
   const list=document.getElementById('alarmsList');
   if(!S.alarms.length){list.innerHTML='<div class="no-items">No alarms — add one above</div>';return;}
-  list.innerHTML=S.alarms.map(a=>`
-    <div class="ac ${a.on?'':'off'}">
+  list.innerHTML=S.alarms.map(a=>{
+    const snd=SOUNDS[a.sound]||SOUNDS.beep;
+    return `<div class="ac ${a.on?'':'off'}">
       <div>
         <div class="ac-time">${a.hour}:${a.min}<span class="ac-ampm">${S.fmt24?'':a.ampm}</span></div>
       </div>
       <div class="ac-info">
         <div class="ac-name">${a.label||'Alarm'}${a.challenge==='math'?' 🧮':''}</div>
-        <div class="ac-sub">${a.days.length===0?'Once':a.days.map(d=>DAY_SHORT[d]).join(' ')} · ${a.sound} · snooze ${a.snooze}m</div>
+        <div class="ac-sub">${a.days.length===0?'Once':a.days.map(d=>DAY_SHORT[d]).join(' ')} · ${snd.icon}${snd.name}${a.fade?' · fade '+a.fade+'s':''} · snooze ${a.snooze}m · vol ${a.volume||7}</div>
       </div>
       <button class="toggle ${a.on?'on':''}" onclick="toggleAlarm('${a.id}')"></button>
       <button class="del-btn" onclick="delAlarm('${a.id}')">✕</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function toggleAlarm(id){const a=S.alarms.find(x=>x.id===id);if(a){a.on=!a.on;save();renderAlarms();updateNextAlarm();}}
 function delAlarm(id){S.alarms=S.alarms.filter(x=>x.id!==id);save();renderAlarms();updateNextAlarm();}
+
 
 // ── STOPWATCH ─────────────────────────────────────────────────────────
 function pad(n,z=2){return String(Math.floor(n)).padStart(z,'0')}
@@ -842,7 +1140,281 @@ function renderTimers(){
 }
 function dismissTimerDone(){document.getElementById('timerDoneOverlay').style.display='none';}
 
-// ── WORLD CLOCK ───────────────────────────────────────────────────────
+
+// ── INTERVAL TIMER ────────────────────────────────────────────────────
+const ITV_COLORS=['#e85050','#5b9cf6','#5bbf7a','#e8c87a','#a78bfa','#f97316','#06b6d4','#ec4899'];
+let itvRows=[];
+let itvRowCounter=0;
+let itvRunnerState=null; // active runner state
+
+// Default rows for new builder
+function initItvBuilder(){
+  if(itvRows.length===0){
+    itvRows=[
+      {id:itvRowCounter++,label:'Warm Up',dur:'5m',color:ITV_COLORS[2]},
+      {id:itvRowCounter++,label:'Run',dur:'1m',color:ITV_COLORS[0]},
+      {id:itvRowCounter++,label:'Walk',dur:'2m',color:ITV_COLORS[1]},
+    ];
+  }
+  renderItvRows();
+}
+
+function switchItvTab(t){
+  document.getElementById('itvBuilder').style.display=t==='build'?'':'none';
+  document.getElementById('itvSaved').style.display=t==='saved'?'':'none';
+  document.getElementById('itvTabBuild').classList.toggle('active',t==='build');
+  document.getElementById('itvTabSaved').classList.toggle('active',t==='saved');
+  if(t==='saved') renderItvSaved();
+}
+
+function addItvRow(label='',dur='30s',color=null){
+  const c=color||ITV_COLORS[itvRowCounter%ITV_COLORS.length];
+  itvRows.push({id:itvRowCounter++,label:label||'Interval',dur,color:c});
+  renderItvRows();
+}
+
+function delItvRow(id){
+  itvRows=itvRows.filter(r=>r.id!==id);
+  renderItvRows();
+}
+
+function renderItvRows(){
+  const el=document.getElementById('itvIntervals');
+  el.innerHTML=itvRows.map((r,i)=>`
+    <div class="itv-interval-row" id="itvrow-${r.id}">
+      <span class="itv-drag-handle">⠿</span>
+      <div class="itv-color-dot" style="background:${r.color}" onclick="cycleItvColor(${r.id})"></div>
+      <input class="itv-interval-label" value="${r.label}" onchange="updateItvRow(${r.id},'label',this.value)" placeholder="Label"/>
+      <input class="itv-dur-inp" value="${r.dur}" onchange="updateItvRow(${r.id},'dur',this.value)" placeholder="30s"/>
+      <button class="itv-del-row" onclick="delItvRow(${r.id})">✕</button>
+    </div>`).join('');
+  enableItvDragSort();
+}
+
+function updateItvRow(id,key,val){
+  const r=itvRows.find(x=>x.id===id);if(r) r[key]=val;
+}
+
+function cycleItvColor(id){
+  const r=itvRows.find(x=>x.id===id);if(!r) return;
+  const idx=(ITV_COLORS.indexOf(r.color)+1)%ITV_COLORS.length;
+  r.color=ITV_COLORS[idx];
+  renderItvRows();
+}
+
+// Simple drag-sort for interval rows
+function enableItvDragSort(){
+  const rows=document.querySelectorAll('.itv-interval-row');
+  let dragging=null;
+  rows.forEach(row=>{
+    const handle=row.querySelector('.itv-drag-handle');
+    handle.addEventListener('mousedown',e=>{dragging=row;row.style.opacity='0.5';});
+    handle.addEventListener('touchstart',e=>{dragging=row;row.style.opacity='0.5';},{passive:true});
+    row.addEventListener('dragover',e=>{
+      if(!dragging||dragging===row) return;
+      const rect=row.getBoundingClientRect();
+      const mid=rect.top+rect.height/2;
+      const clientY=e.clientY||e.touches?.[0]?.clientY;
+      row.parentNode.insertBefore(dragging,clientY<mid?row:row.nextSibling);
+    });
+  });
+  document.addEventListener('mouseup',()=>{if(dragging){dragging.style.opacity='';dragging=null;syncItvRowOrder();}},{once:true});
+}
+
+function syncItvRowOrder(){
+  const els=document.querySelectorAll('.itv-interval-row');
+  const newOrder=[];
+  els.forEach(el=>{
+    const id=parseInt(el.id.replace('itvrow-',''));
+    const r=itvRows.find(x=>x.id===id);
+    if(r) newOrder.push(r);
+  });
+  itvRows=newOrder;
+}
+
+function parseItvProgram(){
+  const name=document.getElementById('itvName').value.trim()||'My Program';
+  const rounds=Math.max(1,parseInt(document.getElementById('itvRounds').value)||1);
+  const restRaw=document.getElementById('itvRestBetween').value.trim();
+  const restSec=restRaw?parseDuration(restRaw):0;
+  const sound=document.getElementById('itvSound').value;
+  syncItvRowOrder();
+  const intervals=itvRows.map(r=>({
+    label:r.label,
+    dur:parseDuration(r.dur)||30,
+    color:r.color
+  })).filter(r=>r.dur>0);
+  return {name,rounds,restSec,sound,intervals};
+}
+
+function saveItvProgram(){
+  const p=parseItvProgram();
+  if(!p.intervals.length){alert('Add at least one interval!');return;}
+  if(!S.itvPrograms) S.itvPrograms=[];
+  p.id=Date.now().toString();
+  S.itvPrograms.unshift(p);
+  save();
+  alert('✅ Saved: '+p.name);
+  renderItvSaved();
+}
+
+function quickRunItv(){
+  const p=parseItvProgram();
+  if(!p.intervals.length){alert('Add at least one interval!');return;}
+  startItvRunner(p);
+}
+
+function renderItvSaved(){
+  if(!S.itvPrograms) S.itvPrograms=[];
+  const list=document.getElementById('itvSavedList');
+  const none=document.getElementById('itvNoSaved');
+  if(!S.itvPrograms.length){list.innerHTML='';none.style.display='';return;}
+  none.style.display='none';
+  const totalDur=p=>{
+    let t=p.intervals.reduce((s,i)=>s+i.dur,0)*p.rounds;
+    if(p.restSec&&p.rounds>1) t+=p.restSec*(p.rounds-1);
+    return t;
+  };
+  list.innerHTML=S.itvPrograms.map(p=>`
+    <div class="itv-saved-card">
+      <div class="itv-saved-top">
+        <div class="itv-saved-name">🏃 ${p.name}</div>
+        <button class="itv-del-saved" onclick="delItvProgram('${p.id}')">✕</button>
+      </div>
+      <div class="itv-saved-meta">${p.rounds} round${p.rounds>1?'s':''} · ${p.intervals.length} intervals · Total: ${fmtTimer(totalDur(p))}${p.restSec?' · Rest: '+fmtTimer(p.restSec):''}</div>
+      <div class="itv-saved-intervals">${p.intervals.map(i=>`<div class="itv-seg" style="background:${i.color}">${i.label} <strong>${fmtTimer(i.dur)}</strong></div>`).join('')}</div>
+      <div class="itv-saved-btns">
+        <button class="itv-run-btn" onclick="startItvRunner(${JSON.stringify(p).replace(/"/g,'&quot;')})">▶ Run</button>
+        <button class="itv-edit-btn" onclick="loadItvForEdit('${p.id}')">Edit</button>
+      </div>
+    </div>`).join('');
+}
+
+function delItvProgram(id){
+  S.itvPrograms=S.itvPrograms.filter(p=>p.id!==id);
+  save();renderItvSaved();
+}
+
+function loadItvForEdit(id){
+  const p=S.itvPrograms.find(x=>x.id===id);if(!p) return;
+  document.getElementById('itvName').value=p.name;
+  document.getElementById('itvRounds').value=p.rounds;
+  document.getElementById('itvRestBetween').value=p.restSec?p.restSec+'s':'';
+  document.getElementById('itvSound').value=p.sound||'beep';
+  itvRows=p.intervals.map((i,idx)=>({id:itvRowCounter++,label:i.label,dur:i.dur+'s',color:i.color}));
+  renderItvRows();
+  switchItvTab('build');
+}
+
+// ── INTERVAL RUNNER ENGINE ────────────────────────────────────────────
+function buildItvSequence(p){
+  const seq=[];
+  for(let r=0;r<p.rounds;r++){
+    p.intervals.forEach(i=>seq.push({...i,round:r+1,totalRounds:p.rounds}));
+    if(p.restSec>0&&r<p.rounds-1) seq.push({label:'Rest',dur:p.restSec,color:'#555',round:r+1,totalRounds:p.rounds,isRest:true});
+  }
+  return seq;
+}
+
+function startItvRunner(p){
+  if(typeof p === 'string') p=JSON.parse(p);
+  const seq=buildItvSequence(p);
+  itvRunnerState={
+    program:p,
+    seq,
+    idx:0,
+    remaining:seq[0].dur,
+    paused:false,
+    interval:null,
+    totalDur:seq.reduce((s,i)=>s+i.dur,0),
+    elapsed:0
+  };
+  document.getElementById('itvRunner').style.display='flex';
+  renderItvRunnerSegs(seq);
+  playSound(p.sound||'beep');
+  if(S.vib&&navigator.vibrate) navigator.vibrate(200);
+  itvRunnerState.interval=setInterval(tickItvRunner,1000);
+  updateItvRunnerUI();
+}
+
+function renderItvRunnerSegs(seq){
+  const el=document.getElementById('itvRunnerSegs');
+  el.innerHTML=seq.map((s,i)=>`<div class="itv-runner-seg" id="itvrseg-${i}" style="background:${s.color}"></div>`).join('');
+}
+
+function tickItvRunner(){
+  const rs=itvRunnerState;
+  if(!rs||rs.paused) return;
+  rs.remaining--;
+  rs.elapsed++;
+  if(rs.remaining<=3&&rs.remaining>0){
+    playSound(rs.program.sound||'beep');
+    if(S.vib&&navigator.vibrate) navigator.vibrate(100);
+  }
+  if(rs.remaining<=0){
+    rs.idx++;
+    if(rs.idx>=rs.seq.length){
+      // Done!
+      clearInterval(rs.interval);
+      playSound('chime');
+      if(S.vib&&navigator.vibrate) navigator.vibrate([400,100,400,100,400]);
+      document.getElementById('itvRunner').style.display='none';
+      document.getElementById('timerDoneLabel').textContent='🏁 '+rs.program.name;
+      document.getElementById('timerDoneSub').textContent=`Completed ${rs.program.rounds} round${rs.program.rounds>1?'s':''} — great job!`;
+      document.getElementById('timerDoneOverlay').style.display='flex';
+      itvRunnerState=null;
+      return;
+    }
+    rs.remaining=rs.seq[rs.idx].dur;
+    playSound(rs.program.sound||'beep');
+    if(S.vib&&navigator.vibrate) navigator.vibrate(300);
+  }
+  updateItvRunnerUI();
+}
+
+function updateItvRunnerUI(){
+  const rs=itvRunnerState;if(!rs) return;
+  const cur=rs.seq[rs.idx];
+  const next=rs.seq[rs.idx+1];
+  // background color
+  document.getElementById('itvRunner').style.background=cur.color;
+  document.getElementById('itvRunnerName').textContent=rs.program.name;
+  document.getElementById('itvRunnerPhase').textContent=cur.isRest?'💤 Rest':cur.label;
+  document.getElementById('itvRunnerTime').textContent=fmtTimer(rs.remaining);
+  document.getElementById('itvRunnerNext').textContent=next?'Next: '+next.label+' ('+fmtTimer(next.dur)+')':'Last interval!';
+  document.getElementById('itvRunnerRounds').textContent=rs.program.rounds>1?`Round ${cur.round} of ${cur.totalRounds}`:'';
+  const pct=(rs.elapsed/rs.totalDur*100).toFixed(1);
+  document.getElementById('itvProgFill').style.width=pct+'%';
+  // segment highlight
+  rs.seq.forEach((_,i)=>{
+    const seg=document.getElementById('itvrseg-'+i);
+    if(seg){
+      seg.classList.remove('done','active-seg');
+      if(i<rs.idx) seg.classList.add('done');
+      if(i===rs.idx) seg.classList.add('active-seg');
+    }
+  });
+}
+
+function pauseItvRunner(){
+  if(!itvRunnerState) return;
+  itvRunnerState.paused=!itvRunnerState.paused;
+  document.getElementById('itvRunnerPauseBtn').textContent=itvRunnerState.paused?'▶ Resume':'⏸ Pause';
+}
+
+function skipItvInterval(){
+  if(!itvRunnerState) return;
+  itvRunnerState.elapsed+=itvRunnerState.remaining;
+  itvRunnerState.remaining=0;
+  tickItvRunner();
+}
+
+function stopItvRunner(){
+  if(itvRunnerState){clearInterval(itvRunnerState.interval);itvRunnerState=null;}
+  document.getElementById('itvRunner').style.display='none';
+}
+
+
 const CITIES=[
   {city:'Cairo',tz:'Africa/Cairo',country:'EG'},
   {city:'Dubai',tz:'Asia/Dubai',country:'AE'},
